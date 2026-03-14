@@ -31,7 +31,7 @@ jobs:
       # Upload `variables.json` to Composer bucket
       - name: Upload Variables JSON to GCS
         run: |
-          gsutil cp variables/dev/variables.json gs://us-central1-airflow-dev-e4d8e584-bucket/data/dev/variables.json
+          gsutil cp variables/dev/variables.json gs://us-central1-airflow-demo-91e33c89-bucket/data/dev/variables.json
 
       # Import Variables into Airflow-DEV
       - name: Import Variables into Airflow-DEV
@@ -43,13 +43,13 @@ jobs:
       # Sync Spark job to GCS
       - name: Upload Spark Job to GCS
         run: |
-          gsutil cp spark_job/spark_transformation_job.py gs://airflow-projetcs-gds-dev/flight-booking-analysis/spark-job/
+          gsutil cp spark_job/spark_transformation_job.py gs://airflow_integration/flight-booking-analysis/spark-job/
 
       # Sync Airflow DAG to Airflow DEV Composer
       - name: Upload Airflow DAG to DEV Environment (Dag Folder)
         run: |
           gcloud composer environments storage dags import \
-            --environment airflow-dev \
+            --environment airflow-demo \
             --location us-central1 \
             --source airflow_job/airflow_job.py
 
