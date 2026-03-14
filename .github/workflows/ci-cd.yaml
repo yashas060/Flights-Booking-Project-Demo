@@ -42,6 +42,7 @@ jobs:
         run: |
           gcloud composer environments run airflow-dev \
             --location us-central1 \
+            --project ${{ secrets.GCP_PROJECT_ID }} \
             variables import -- /home/airflow/gcs/data/dev/variables.json
 
       # Sync Spark job to GCS
@@ -55,6 +56,7 @@ jobs:
           gcloud composer environments storage dags import \
             --environment airflow-dev \
             --location us-central1 \
+            --project ${{ secrets.GCP_PROJECT_ID }} \
             --source airflow_job/airflow_job.py
 
   upload-to-prod:
