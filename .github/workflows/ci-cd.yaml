@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout the repository
+      # Checkout the repository ----
       - name: Checkout Code
         uses: actions/checkout@v3
 
@@ -33,6 +33,10 @@ jobs:
         run: |
           gsutil cp variables/dev/variables.json gs://us-central1-airflow-dev-19e9687a-bucket/data/dev/variables.json
 
+      # Upload `variables.json` to Composer bucket
+      - name: Wait for GCS Sync
+        run: sleep 50  # Gives the mount time to refresh
+        
       # Import Variables into Airflow-DEV
       - name: Import Variables into Airflow-DEV
         run: |
