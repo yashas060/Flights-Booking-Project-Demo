@@ -31,17 +31,16 @@ jobs:
       # Upload `variables.json` to Composer bucket
       - name: Upload Variables JSON to GCS
         run: |
-          gsutil cp variables/dev/variables.json gs://us-central1-airflow-dev-19e9687a-bucket/data/dev/variables.json
+          gsutil cp variables/dev/variables.json gs://us-central1-airflow-dev-e110e22b-bucket/data/dev/variables.json
 
       # Upload `variables.json` to Composer bucket
       - name: Wait for GCS Sync
-        run: sleep 50  # Gives the mount time to refresh
+        run: sleep 10  # Gives the mount time to refresh
         
       # Import Variables into Airflow-DEV
       - name: Import Variables into Airflow-DEV
         run: |
           gcloud composer environments run airflow-dev \
-            --location us-central1 \
             variables import -- /home/airflow/gcs/data/dev/variables.json
 
       # Sync Spark job to GCS
@@ -55,7 +54,6 @@ jobs:
           gcloud composer environments storage dags import \
             --environment airflow-dev \
             --location us-central1 \
-            --project ${{ secrets.GCP_PROJECT_ID }} \
             --source airflow_job/airflow_job.py
 
   upload-to-prod:
