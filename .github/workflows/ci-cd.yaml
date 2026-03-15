@@ -41,8 +41,8 @@ jobs:
       - name: Import Variables into Airflow-DEV
         run: |
           gcloud composer environments run airflow-dev \
-            --location us-central1 \
-            variables import -- gs://us-central1-airflow-dev-e110e22b-bucket/data/dev/variables.json
+            --location projects/eastern-entity-485416-t6/locations/us-central1/environments/airflow-dev us-central1 \
+            variables import -- /home/airflow/gcs/data/dev/variables.json
             
       # Sync Spark job to GCS
       - name: Upload Spark Job to GCS
